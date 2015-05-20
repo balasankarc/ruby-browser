@@ -1,0 +1,5 @@
+---
+- test/browser_spec.rb
+- test/middleware_spec.rb
+- test/sample_app.rb
+- test/spec_helper.rb
