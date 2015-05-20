@@ -1,0 +1,162 @@
+--- !ruby/object:Gem::Specification
+name: browser
+version: !ruby/object:Gem::Version
+  version: 0.8.0
+platform: ruby
+authors:
+- Nando Vieira
+autorequire: 
+bindir: bin
+cert_chain: []
+date: 2014-11-20 00:00:00.000000000 Z
+dependencies:
+- !ruby/object:Gem::Dependency
+  name: bundler
+  requirement: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: '0'
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: '0'
+- !ruby/object:Gem::Dependency
+  name: rake
+  requirement: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: '0'
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: '0'
+- !ruby/object:Gem::Dependency
+  name: rails
+  requirement: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: '0'
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: '0'
+- !ruby/object:Gem::Dependency
+  name: rack-test
+  requirement: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: '0'
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: '0'
+- !ruby/object:Gem::Dependency
+  name: minitest
+  requirement: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: '0'
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: '0'
+description: Do some browser detection with Ruby.
+email:
+- fnando.vieira@gmail.com
+executables: []
+extensions: []
+extra_rdoc_files: []
+files:
+- ".gitignore"
+- ".hound.yml"
+- ".travis.yml"
+- CONTRIBUTING.md
+- Gemfile
+- README.md
+- Rakefile
+- bots.yml
+- browser.gemspec
+- config.ru
+- gemfiles/rails3.gemfile
+- languages.yml
+- lib/browser.rb
+- lib/browser/action_controller.rb
+- lib/browser/meta/base.rb
+- lib/browser/meta/generic_browser.rb
+- lib/browser/meta/id.rb
+- lib/browser/meta/ie.rb
+- lib/browser/meta/ios.rb
+- lib/browser/meta/mobile.rb
+- lib/browser/meta/modern.rb
+- lib/browser/meta/platform.rb
+- lib/browser/meta/safari.rb
+- lib/browser/meta/webkit.rb
+- lib/browser/methods/bots.rb
+- lib/browser/methods/consoles.rb
+- lib/browser/methods/devices.rb
+- lib/browser/methods/ie.rb
+- lib/browser/methods/language.rb
+- lib/browser/methods/mobile.rb
+- lib/browser/methods/platform.rb
+- lib/browser/methods/tv.rb
+- lib/browser/middleware.rb
+- lib/browser/middleware/context.rb
+- lib/browser/middleware/context/additions.rb
+- lib/browser/middleware/context/url_methods.rb
+- lib/browser/rails.rb
+- lib/browser/version.rb
+- search_engines.yml
+- test/browser_spec.rb
+- test/middleware_spec.rb
+- test/sample_app.rb
+- test/spec_helper.rb
+- test/ua.yml
+homepage: http://github.com/fnando/browser
+licenses: []
+metadata: {}
+post_install_message: 
+rdoc_options: []
+require_paths:
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement
+  requirements:
+  - - ">="
+    - !ruby/object:Gem::Version
+      version: '0'
+required_rubygems_version: !ruby/object:Gem::Requirement
+  requirements:
+  - - ">="
+    - !ruby/object:Gem::Version
+      version: '0'
+requirements: []
+rubyforge_project: 
+rubygems_version: 2.2.2
+signing_key: 
+specification_version: 4
+summary: Do some browser detection with Ruby.
+test_files:
+- test/browser_spec.rb
+- test/middleware_spec.rb
+- test/sample_app.rb
+- test/spec_helper.rb
+- test/ua.yml
