@@ -3,8 +3,7 @@ Section: ruby
 Priority: optional
 Maintainer: Debian Ruby Extras Maintainers <pkg-ruby-extras-maintainers@lists.alioth.debian.org>
 Uploaders: Balasankar C <balasankarc@autistici.org>
-Build-Depends: debhelper (>= 7.0.50~),
-               gem2deb
+Build-Depends: debhelper (>= 7.0.50~), gem2deb, ruby-railties, ruby-rspec
 Standards-Version: 3.9.6
 Vcs-Git: git://anonscm.debian.org/pkg-ruby-extras/ruby-browser.git
 Vcs-Browser: https://anonscm.debian.org/cgit/pkg-ruby-extras/ruby-browser.git
@@ -16,7 +15,11 @@ Package: ruby-browser
 Architecture: all
 XB-Ruby-Versions: ${ruby:Versions}
 Depends: ruby | ruby-interpreter,
+         ruby-railties,
          ${misc:Depends},
          ${shlibs:Depends}
-Description: Do some browser detection with Ruby.
- Do some browser detection with Ruby.
+Description: browser detection for Ruby
+ This gem enables users to do some browser detection with Ruby. It includes 
+ ActionController integration. 
+ .
+ More details can be found at /usr/share/doc/ruby-browser/README.md.gz

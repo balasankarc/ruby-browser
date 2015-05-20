@@ -1,5 +1,5 @@
-ruby-browser (0.8.0-1) UNRELEASED; urgency=medium
+ruby-browser (0.8.0-1) unstable; urgency=medium
 
-  * Initial release (Closes: #nnnn)
+  * Initial release (Closes: #786040)
 
- -- Balasankar C <balasankarc@autistici.org>  Wed, 20 May 2015 22:40:20 +0530
+ -- Balasankar C <balasankarc@autistici.org>  Wed, 20 May 2015 20:32:11 +0530
