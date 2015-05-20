@@ -1,0 +1,32 @@
+Description: Fix relative path issue
+ Tweak the file open statement to point to /usr/share/ location
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/lib/browser/methods/language.rb
++++ b/lib/browser/methods/language.rb
+@@ -1,6 +1,10 @@
+ class Browser
+   module Language
+-    LANGUAGES = YAML.load_file(File.expand_path("../../../../languages.yml", __FILE__))
++    if File.exist?(File.expand_path("../../../../../../share/ruby-browser/languages.yml", __FILE__)) then
++        LANGUAGES = YAML.load_file(File.expand_path("../../../../../../share/ruby-browser/languages.yml", __FILE__))
++    else
++        LANGUAGES = YAML.load_file(File.expand_path("usr/share/ruby-browser/languages.yml", __FILE__))
++    end
+ 
+     # Set browser's preferred language
+     attr_writer :accept_language
+--- a/lib/browser/methods/bots.rb
++++ b/lib/browser/methods/bots.rb
+@@ -1,6 +1,10 @@
+ class Browser
+   module Bots
+-    root = Pathname.new(File.expand_path("../../../..", __FILE__))
++    if File.exist?(File.expand_path("../../../../../../share/ruby-browser/bots.yml", __FILE__)) and File.exist?(File.expand_path("../../../../../../share/ruby-browser/search_engines.yml", __FILE__)) then
++        root = Pathname.new(File.expand_path("../../../../../../share/ruby-browser/", __FILE__))
++    else
++        root = Pathname.new(File.expand_path("/usr/share/ruby-browser/", __FILE__))
++    end
+     BOTS = YAML.load_file(root.join("bots.yml"))
+     SEARCH_ENGINES = YAML.load_file(root.join("search_engines.yml"))
+ 

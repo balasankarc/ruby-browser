@@ -1,0 +1,12 @@
+Description: Remove bundler dependency
+ Remove need of bundler while running tests.
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/test/spec_helper.rb
++++ b/test/spec_helper.rb
+@@ -1,5 +1,4 @@
+ ENV["BUNDLE_GEMFILE"] ||= File.expand_path("../../Gemfile", __FILE__)
+-require "bundler/setup"
+ require "minitest/autorun"
+ require "minitest/unit"
+ require "browser"

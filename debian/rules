@@ -13,3 +13,16 @@
 
 %:
 	dh $@ --buildsystem=ruby --with ruby
+override_dh_auto_install:
+	cp languages.yml debian/ruby-browser/usr/share/ruby-browser/
+	cp bots.yml debian/ruby-browser/usr/share/ruby-browser/
+	cp search_engines.yml debian/ruby-browser/usr/share/ruby-browser/
+	dh_auto_install
+override_dh_auto_clean:
+	if [ -e Gemfile.lock ]; then\
+	   	rm Gemfile.lock; \
+	fi
+	if [ -e log/* ]; then \
+		rm log/*; \
+	fi
+	dh_auto_clean
