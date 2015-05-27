@@ -11,7 +11,7 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 +    if File.exist?(File.expand_path("../../../../../../share/ruby-browser/languages.yml", __FILE__)) then
 +        LANGUAGES = YAML.load_file(File.expand_path("../../../../../../share/ruby-browser/languages.yml", __FILE__))
 +    else
-+        LANGUAGES = YAML.load_file(File.expand_path("usr/share/ruby-browser/languages.yml", __FILE__))
++        LANGUAGES = YAML.load_file(File.expand_path("/usr/share/ruby-browser/languages.yml", __FILE__))
 +    end
  
      # Set browser's preferred language
