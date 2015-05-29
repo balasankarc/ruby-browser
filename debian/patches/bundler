@@ -1,5 +1,8 @@
 Description: Remove bundler dependency
  Remove need of bundler while running tests.
+Author: Balasankar C <balasankarc@autistici.org>
+Forwarded: not-needed
+Last-Update: 2015-05-28
 ---
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 --- a/test/spec_helper.rb

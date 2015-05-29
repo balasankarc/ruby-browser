@@ -1,5 +1,11 @@
 Description: Fix relative path issue
- Tweak the file open statement to point to /usr/share/ location
+ Tweak the file open statement to point to /usr/share/ location. The gem 
+ requires these xml files to run and hence they are copied to 
+ /usr/share/ruby-browser location.
+Author: Balasankar C <balasankarc@autistici.org>
+Forwarded: not-needed
+Last-Update: 2015-05-28
+
 ---
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 --- a/lib/browser/methods/language.rb
