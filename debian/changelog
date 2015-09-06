@@ -1,3 +1,9 @@
+ruby-browser (1.0.1-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Balasankar C <balasankarc@autistici.org>  Sun, 06 Sep 2015 10:15:26 +0530
+
 ruby-browser (0.8.0-1) unstable; urgency=medium
 
   * Initial release (Closes: #786040)
