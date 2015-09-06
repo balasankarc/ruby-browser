@@ -181,12 +181,13 @@ describe Browser do
 
     assert_equal "Internet Explorer", @browser.name
     assert @browser.ie?
-    assert @browser.ie7?
-    refute @browser.ie8?
+    assert @browser.ie8?
     refute @browser.modern?
     assert @browser.compatibility_view?
-    assert_equal "7.0", @browser.full_version
-    assert_equal "7", @browser.version
+    assert_equal "8.0", @browser.full_version
+    assert_equal "8", @browser.version
+    assert_equal "7.0", @browser.msie_full_version
+    assert_equal "7", @browser.msie_version
   end
 
   it "detects ie9" do
@@ -206,12 +207,13 @@ describe Browser do
 
     assert_equal "Internet Explorer", @browser.name
     assert @browser.ie?
-    assert @browser.ie7?
-    refute @browser.ie9?
+    assert @browser.ie9?
     refute @browser.modern?
     assert @browser.compatibility_view?
-    assert_equal "7.0", @browser.full_version
-    assert_equal "7", @browser.version
+    assert_equal "9.0", @browser.full_version
+    assert_equal "9", @browser.version
+    assert_equal "7.0", @browser.msie_full_version
+    assert_equal "7", @browser.msie_version
   end
 
   it "detects ie10" do
@@ -231,12 +233,13 @@ describe Browser do
 
     assert_equal "Internet Explorer", @browser.name
     assert @browser.ie?
-    assert @browser.ie7?
-    refute @browser.ie10?
+    assert @browser.ie10?
     refute @browser.modern?
     assert @browser.compatibility_view?
-    assert_equal "7.0", @browser.full_version
-    assert_equal "7", @browser.version
+    assert_equal "10.0", @browser.full_version
+    assert_equal "10", @browser.version
+    assert_equal "7.0", @browser.msie_full_version
+    assert_equal "7", @browser.msie_version
   end
 
   it "detects ie11" do
@@ -249,6 +252,32 @@ describe Browser do
     refute @browser.compatibility_view?
     assert_equal "11.0", @browser.full_version
     assert_equal "11", @browser.version
+  end
+
+  it "detects ie11 in compatibility view" do
+    @browser.ua = $ua["IE11_COMPAT"]
+
+    assert_equal "Internet Explorer", @browser.name
+    assert @browser.ie?
+    assert @browser.ie11?
+    refute @browser.modern?
+    assert @browser.compatibility_view?
+    assert_equal "11.0", @browser.full_version
+    assert_equal "11", @browser.version
+    assert_equal "7.0", @browser.msie_full_version
+    assert_equal "7", @browser.msie_version
+  end
+
+  it "detects Lumia 800" do
+    @browser.ua = $ua["LUMIA800"]
+
+    assert_equal "Internet Explorer", @browser.name
+    assert @browser.ie?
+    assert @browser.ie9?
+    assert_equal "9.0", @browser.full_version
+    assert_equal "9", @browser.version
+    refute @browser.tablet?
+    assert @browser.mobile?
   end
 
   it "detects opera" do
@@ -287,6 +316,7 @@ describe Browser do
   it "detects modern firefox" do
     @browser.ua = $ua["FIREFOX_MODERN"]
 
+    assert_equal :firefox, @browser.id
     assert_equal "Firefox", @browser.name
     assert @browser.firefox?
     assert @browser.modern?
@@ -297,7 +327,8 @@ describe Browser do
   it "detects firefox android tablet" do
     @browser.ua = $ua["FIREFOX_TABLET"]
 
-    assert_equal "Android", @browser.name
+    assert_equal :firefox, @browser.id
+    assert_equal "Firefox", @browser.name
     assert @browser.firefox?
     assert @browser.modern?
     assert @browser.tablet?
@@ -624,11 +655,33 @@ describe Browser do
     assert @browser.windows?
   end
 
+  it "detects windows_xp" do
+    @browser.ua = $ua["WINDOWS_XP"]
+
+    assert @browser.windows?
+    assert @browser.windows_xp?
+  end
+
+  it "detects windows_vista" do
+    @browser.ua = $ua["WINDOWS_VISTA"]
+
+    assert @browser.windows?
+    assert @browser.windows_vista?
+  end
+
+  it "detects windows7" do
+    @browser.ua = $ua["WINDOWS7"]
+
+    assert @browser.windows?
+    assert @browser.windows7?
+  end
+
   it "detects windows8" do
     @browser.ua = $ua["WINDOWS8"]
 
     assert @browser.windows?
     assert @browser.windows8?
+    refute @browser.windows8_1?
   end
 
   it "detects windows8.1" do
@@ -636,6 +689,7 @@ describe Browser do
 
     assert @browser.windows?
     assert @browser.windows8?
+    assert @browser.windows8_1?
   end
 
   it "detects linux platform" do
@@ -747,6 +801,15 @@ describe Browser do
   it "detects windows x64" do
     @browser.ua = $ua["IE10_X64_WINX64"]
     assert @browser.windows_x64?
+    refute @browser.windows_wow64?
+    assert @browser.windows_x64_inclusive?
+  end
+
+  it "detects windows wow64" do
+    @browser.ua = $ua["WINDOWS_WOW64"]
+    refute @browser.windows_x64?
+    assert @browser.windows_wow64?
+    assert @browser.windows_x64_inclusive?
   end
 
   it "detects ie11 touch desktop pc" do
@@ -762,6 +825,96 @@ describe Browser do
     assert @browser.windows8?
     assert_equal "11.0", @browser.full_version
     assert_equal "11", @browser.version
+  end
+
+  it "detects Microsoft Edge" do
+    @browser.ua = $ua["MS_EDGE"]
+
+    assert_equal :edge, @browser.id
+    assert_equal "Microsoft Edge", @browser.name
+    assert_equal "12.0", @browser.full_version
+    assert_equal "12", @browser.version
+    assert @browser.windows10?
+    assert @browser.edge?
+    assert @browser.modern?
+    refute @browser.webkit?
+    refute @browser.chrome?
+    refute @browser.safari?
+    refute @browser.mobile?
+  end
+
+  it "detects Microsoft Edge in compatibility view" do
+    @browser.ua = $ua["MS_EDGE_COMPAT"]
+
+    assert_equal :edge, @browser.id
+    assert_equal "Microsoft Edge", @browser.name
+    assert_equal "12.0", @browser.full_version
+    assert_equal "12", @browser.version
+    assert_equal "7.0", @browser.msie_full_version
+    assert_equal "7", @browser.msie_version
+    assert @browser.edge?
+    assert @browser.compatibility_view?
+    refute @browser.modern?
+    refute @browser.webkit?
+    refute @browser.chrome?
+    refute @browser.safari?
+    refute @browser.mobile?
+  end
+
+  it "detects Microsoft Edge Mobile" do
+    @browser.ua = $ua["MS_EDGE_MOBILE"]
+
+    assert_equal :edge, @browser.id
+    assert_equal "Microsoft Edge", @browser.name
+    assert_equal "12.0", @browser.full_version
+    assert_equal "12", @browser.version
+    refute @browser.windows10?
+    assert @browser.windows_phone?
+    assert @browser.edge?
+    assert @browser.modern?
+    assert @browser.mobile?
+    refute @browser.webkit?
+    refute @browser.chrome?
+    refute @browser.safari?
+  end
+
+  it "detects IE without Trident" do
+      @browser.ua = $ua["IE_WITHOUT_TRIDENT"]
+
+      assert_equal :ie, @browser.id
+      assert_equal "Internet Explorer", @browser.name
+      assert_equal "0.0", @browser.msie_full_version
+      assert_equal "0", @browser.msie_version
+      assert_equal "0.0", @browser.full_version
+      assert_equal "0", @browser.version
+      refute @browser.windows10?
+      refute @browser.windows_phone?
+      refute @browser.edge?
+      refute @browser.modern?
+      refute @browser.mobile?
+      refute @browser.webkit?
+      refute @browser.chrome?
+      refute @browser.safari?
+    end
+
+  it "detects Daumoa" do
+    @browser.ua = $ua["DAUMOA"]
+
+    assert_equal :ie, @browser.id
+    assert_equal "Internet Explorer", @browser.name
+    assert_equal "0.0", @browser.msie_full_version
+    assert_equal "0", @browser.msie_version
+    assert_equal "0.0", @browser.full_version
+    assert_equal "0", @browser.version
+    assert @browser.ie?
+    refute @browser.windows10?
+    refute @browser.windows_phone?
+    refute @browser.edge?
+    refute @browser.modern?
+    refute @browser.mobile?
+    refute @browser.webkit?
+    refute @browser.chrome?
+    refute @browser.safari?
   end
 
   it "detects kindle monochrome" do
@@ -870,13 +1023,16 @@ describe Browser do
 
   it "detects bots" do
     %w[
+      APPLE_BOT
       DOT_BOT
       FACEBOOK_BOT
       GOOGLE_BOT
       LINKDEXBOT
       LOAD_TIME_BOT
       MAIL_RU
+      MEGAINDEX_RU
       MSN_BOT
+      QUERYSEEKER
       SCRAPY
       YANDEX_DIRECT
       YANDEX_METRIKA
@@ -887,6 +1043,11 @@ describe Browser do
 
     @browser.ua = $ua["CHROME"]
     refute @browser.bot?
+  end
+
+  it "detects Google Page Speed as a bot" do
+    @browser.ua = $ua["GOOGLE_PAGE_SPEED_INSIGHTS"]
+    assert @browser.bot?
   end
 
   it "doesn't consider empty UA as bot" do
@@ -950,6 +1111,12 @@ describe Browser do
       @browser.ua = $ua[key]
       assert @browser.search_engine?, "#{$ua[key]} should be a search engine"
     end
+  end
+
+  it "detects Google Structured Data Testing Tool as a bot" do
+    @browser.ua = $ua["GOOGLE_STRUCTURED_DATA_TESTING_TOOL"]
+
+    assert @browser.bot?, "Google Structured Data Testing Tool should be a bot"
   end
 
   it "knows a supported browser" do

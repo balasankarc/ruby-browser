@@ -42,12 +42,13 @@ class Browser
   alias_method :ua=, :user_agent=
 
   NAMES = {
-    ie: "Internet Explorer", # Must come before android
-    chrome: "Chrome", # Must come before android
+    edge: "Microsoft Edge",   # Must come before everything
+    ie: "Internet Explorer",  # Must come before android
+    chrome: "Chrome",         # Must come before android
+    firefox: "Firefox",       # Must come before android
     android: "Android",
     blackberry: "BlackBerry",
     core_media: "Apple CoreMedia",
-    firefox: "Firefox",
     ipad: "iPad",
     iphone: "iPhone",
     ipod: "iPod Touch",
@@ -65,6 +66,7 @@ class Browser
   }
 
   VERSIONS = {
+    edge: %r[Edge/([\d.]+)],
     chrome: %r[(?:Chrome|CriOS)/([\d.]+)],
     default: %r[(?:Version|MSIE|Firefox|QuickTime|BlackBerry[^/]+|CoreMedia v|PhantomJS|AdobeAIR)[/ ]?([a-z0-9.]+)]i,
     opera: %r[(?:Opera/.*? Version/([\d.]+)|Chrome/.*?OPR/([\d.]+))],
@@ -88,7 +90,8 @@ class Browser
   self.modern_rules.tap do |rules|
     rules << -> b { b.webkit? }
     rules << -> b { b.firefox? && b.version.to_i >= 17 }
-    rules << -> b { b.ie? && b.version.to_i >= 9 }
+    rules << -> b { b.ie? && b.version.to_i >= 9 && !b.compatibility_view? }
+    rules << -> b { b.edge? && !b.compatibility_view? }
     rules << -> b { b.opera? && b.version.to_i >= 12 }
     rules << -> b { b.firefox? && b.tablet? && b.android? && b.version.to_i >= 14 }
   end
@@ -121,13 +124,21 @@ class Browser
 
   # Return major version.
   def version
-    full_version.to_s.split(".").first
+    if ie?
+      ie_version
+    else
+      full_version.to_s.split(".").first
+    end
   end
 
   # Return the full version.
   def full_version
-    _, *v = *ua.match(VERSIONS.fetch(id, VERSIONS[:default]))
-    v.compact.first || "0.0"
+    if ie?
+      ie_full_version
+    else
+      _, *v = *ua.match(VERSIONS.fetch(id, VERSIONS[:default]))
+      v.compact.first || "0.0"
+    end
   end
 
   # Return true if browser is modern (Webkit, Firefox 17+, IE9+, Opera 12+).
@@ -137,7 +148,7 @@ class Browser
 
   # Detect if browser is WebKit-based.
   def webkit?
-    !!(ua =~ /AppleWebKit/i)
+    ua =~ /AppleWebKit/i && !edge?
   end
 
   # Detect if browser is QuickTime
@@ -171,7 +182,7 @@ class Browser
 
   # Detect if browser is Chrome.
   def chrome?
-    !!(ua =~ /Chrome|CriOS/) && !opera?
+    ua =~ /Chrome|CriOS/ && !opera? && !edge?
   end
 
   # Detect if browser is Opera.

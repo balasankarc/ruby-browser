@@ -70,17 +70,33 @@ class Browser
       !!(ua =~ /Windows/)
     end
 
+    ## More info here => http://msdn.microsoft.com/fr-FR/library/ms537503.aspx#PltToken
+    def windows_xp?
+      windows? && !!(ua =~ /Windows NT 5.1/)
+    end
+
+    def windows_vista?
+      windows? && !!(ua =~ /Windows NT 6.0/)
+    end
+
+    def windows7?
+      windows? && !!(ua =~ /Windows NT 6.1/)
+    end
+
     def windows8?
       windows? && !!(ua =~ /Windows NT 6.[2-3]/)
     end
 
-    def windows_rt?
-      windows8? && !!(ua =~ /ARM/)
+    def windows8_1?
+      windows? && !!(ua =~ /Windows NT 6\.3/)
     end
 
-    # Detect if current platform is Linux flavor.
-    def linux?
-      !!(ua =~ /Linux/)
+    def windows10?
+      windows? && !!(ua =~ /Windows NT 10/)
+    end
+
+    def windows_rt?
+      windows8? && !!(ua =~ /ARM/)
     end
 
     # Detect if current platform is Windows Mobile.
@@ -96,6 +112,19 @@ class Browser
     # Detect if current platform is Windows in 64-bit architecture.
     def windows_x64?
       windows? && !!(ua =~ /(Win64|x64)/) && !!(ua =~ /x64/)
+    end
+
+    def windows_wow64?
+      windows? && !!(ua =~ /WOW64/i)
+    end
+
+    def windows_x64_inclusive?
+      windows_x64? || windows_wow64?
+    end
+
+    # Detect if current platform is Linux flavor.
+    def linux?
+      !!(ua =~ /Linux/)
     end
 
     # Detect if current platform is ChromeOS

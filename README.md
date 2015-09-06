@@ -2,6 +2,7 @@
 
 [![Travis-CI](https://travis-ci.org/fnando/browser.png)](https://travis-ci.org/fnando/browser)
 [![CodeClimate](https://codeclimate.com/github/fnando/browser.png)](https://codeclimate.com/github/fnando/browser)
+[![Gem Version](https://badge.fury.io/rb/browser.svg)](http://badge.fury.io/rb/browser)
 
 Do some browser detection with Ruby. Includes ActionController integration.
 
@@ -31,6 +32,7 @@ browser.console?
 browser.firefox?
 browser.ie?
 browser.ie6?            # this goes up to 11
+browser.edge?           # Newest MS browser
 browser.modern?         # Webkit, Firefox 17+, IE 9+ and Opera 12+
 browser.platform        # return :mac, :windows, :linux or :other
 browser.mac?
@@ -61,7 +63,7 @@ The current rules that define a modern browser are pretty loose:
 * Firefox Tablet 14+
 * Opera 12+
 
-You can define your your rules. A rule must be a proc/lambda or any object that implements the method === and accepts the browser object. To redefine all rules, clear the existing rules before adding your own.
+You can define your own rules. A rule must be a proc/lambda or any object that implements the method === and accepts the browser object. To redefine all rules, clear the existing rules before adding your own.
 
 ```ruby
 # Only Chrome Canary is considered modern.
@@ -84,6 +86,34 @@ This adds a helper method called `browser`, that inspects your current user agen
   <p class="disclaimer">You're running an older IE version. Please update it!</p>
 <% end %>
 ```
+
+### Internet Explorer
+
+Internet Explorer has a compatibility view mode that allows newer versions (IE8+) to run as an older version. Browser will always return the navigator version, ignoring the compatibility view version, when defined. If you need to get the engine's version, you have to use `Browser#msie_version` and `Browser#msie_full_version`.
+
+So, let's say an user activates compatibility view in a IE11 browser. This is what you'll get:
+
+```ruby
+browser.version
+#=> 11
+
+browser.full_version
+#=> 11.0
+
+browser.msie_version
+#=> 7
+
+browser.msie_full_version
+#=> 7.0
+
+browser.compatibility_view?
+#=> true
+
+browser.modern?
+#=> false
+```
+
+This behavior changed in `v1.0.0`; previously there wasn't a way of getting the real browser version.
 
 ### Bots
 
@@ -118,6 +148,13 @@ Rails.configuration.middleware.use Browser::Middleware do
   next if browser.search_engine?
   redirect_to upgrade_path(browser: "oldie") if browser.ie? && !browser.modern?
   redirect_to upgrade_path(browser: "oldfx") if browser.firefox? && !browser.modern?
+end
+```
+
+If you need acccess to the `Rack::Request` object (e.g. to exclude a path), you can do so with `request`.
+```ruby
+Rails.configuration.middleware.use Browser::Middleware do
+  redirect_to upgrade_path unless browser.modern? || request.env['PATH_INFO'] == '/exclude_me'
 end
 ```
 
