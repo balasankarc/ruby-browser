@@ -11,5 +11,5 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
  ENV["BUNDLE_GEMFILE"] ||= File.expand_path("../../Gemfile", __FILE__)
 -require "bundler/setup"
  require "minitest/autorun"
- require "minitest/unit"
+ require "minitest/utils"
  require "browser"
